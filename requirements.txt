@@ -1,0 +1,17 @@
+fastapi
+uvicorn[standard]
+jinja2
+python-multipart
+pydantic-settings
+langgraph
+langchain-core
+langchain-community
+langchain-google-genai
+langchain-tavily
+langchain-pinecone
+langchain-text-splitters
+pinecone
+google-genai
+pypdf
+python-docx
+python-dotenv
