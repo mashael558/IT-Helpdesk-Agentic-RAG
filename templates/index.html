@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>IT Helpdesk Copilot</title>
+<meta name="description" content="Agentic RAG assistant for IT support. Answers from the company knowledge base, falls back to web search, and shows every step it took.">
+<meta name="color-scheme" content="light dark">
+<link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+</head>
+<body>
+<a class="skip" href="#question">Skip to the question box</a>
+<header class="top">
+  <h1 class="brand">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="5" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="M7.5 12h4l5.6-5.8M11.5 12l5.6 5.8"/></svg>
+    IT Helpdesk Copilot
+  </h1>
+  <button type="button" class="btn ghost" id="openUpload">Upload documents</button>
+</header>
+
+<main>
+  <section class="chatpane" aria-labelledby="h-chat">
+    <h2 id="h-chat" class="sr">Conversation</h2>
+    <div id="chat" role="log" aria-live="polite" tabindex="0">
+      <div class="message assistant">
+        <div class="avatar" aria-hidden="true">AI</div>
+        <div class="bubble">Ask an IT question. I answer from the company knowledge base first, and search the web only when it falls short.</div>
+      </div>
+    </div>
+    <div class="examples" role="group" aria-label="Example questions">
+      <button type="button" class="example">How do I reset my VPN password?</button>
+      <button type="button" class="example">What is the process to request new software?</button>
+      <button type="button" class="example">Why is my laptop not connecting to office Wi-Fi?</button>
+    </div>
+    <form id="chatForm" class="ask">
+      <label for="question" class="sr">Your question</label>
+      <input id="question" type="text" autocomplete="off" placeholder="Describe the IT problem" required>
+      <button class="btn" type="submit">Ask</button>
+    </form>
+  </section>
+
+  <aside class="side" aria-label="Run details">
+    <h2>Answered from</h2>
+    <p><span id="sourceUsed" class="pill">Idle</span></p>
+    <h2>Pipeline</h2>
+    <ol class="flow">
+      <li>Route the question</li>
+      <li>Search the knowledge base</li>
+      <li>Grade the evidence</li>
+      <li>Fall back to web search</li>
+      <li>Answer, or say what is missing</li>
+    </ol>
+    <h2>Execution trace</h2>
+    <div id="trace"><div class="empty">No trace.</div></div>
+  </aside>
+</main>
+
+<div id="uploadModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="h-up">
+  <div class="card">
+    <h2 id="h-up">Upload to the knowledge base</h2>
+    <label for="fileInput">Document</label>
+    <input type="file" id="fileInput" accept=".pdf,.txt,.md,.docx">
+    <label for="adminKey">Admin key</label>
+    <input type="password" id="adminKey" autocomplete="off">
+    <p id="uploadStatus" role="status"></p>
+    <div class="actions">
+      <button type="button" class="btn ghost" id="closeUpload">Close</button>
+      <button type="button" class="btn" id="uploadBtn">Upload and index</button>
+    </div>
+  </div>
+</div>
+<script src="{{ url_for('static', path='js/app.js') }}" defer></script>
+</body>
+</html>
